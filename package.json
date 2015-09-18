@@ -18,6 +18,7 @@
   "homepage": "https://github.com/zimmo-be/twig-loader#readme",
   "dependencies": {
     "loader-utils": "^0.2.11",
-    "twig": "^0.8.2"
+    "twig": "^0.8.2",
+    "underscore": "^1.8.3"
   }
 }
