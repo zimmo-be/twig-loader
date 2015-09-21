@@ -25,8 +25,6 @@ Twig.extend(function(Twig) {
                         break;
                     case 'Twig.logic.type.include':
                         throw new Error("Twig-loader: Including templates is not yet supported");
-                    //console.dir(token.token.stack);
-                    //break;
                 }
             }
         });
@@ -38,11 +36,10 @@ Twig.extend(function(Twig) {
             '    module.exports = function(context) { return template.render(context); }'
         ];
         if (includes.length > 0) {
-            var includesOutput = "require("+ JSON.stringify(includes) +");";
-            output.unshift(includesOutput);
+            _.each(includes, function(file) {
+                output.unshift("require("+ JSON.stringify(file) +");\n");
+            });
         }
-        //console.log(output.join('\n'));
-
         return output.join('\n');
     };
 });
