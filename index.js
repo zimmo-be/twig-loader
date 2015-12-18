@@ -24,7 +24,10 @@ Twig.extend(function(Twig) {
                         }
                         break;
                     case 'Twig.logic.type.include':
-                        throw new Error("Twig-loader: Including templates is not yet supported");
+                        _.each(token.token.stack, function(token) {
+                            includes.push("./" + token.value + ".twig");
+                        });
+                        break;
                 }
             }
         });
