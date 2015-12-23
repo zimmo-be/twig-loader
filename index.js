@@ -59,15 +59,20 @@ Twig.extend(function(Twig) {
 });
 
 module.exports = function(source) {
-    var id = this.resource;
+    var id = this.resource,
+        tpl;
 
     this.cacheable && this.cacheable();
 
-    var tpl = Twig.twig({
-        id: id,
-        data: source,
-        allowInlineIncludes: true
-    });
+    // check if template already exists
+    tpl = Twig.twig({ ref: id });
+    if (!tpl) {
+        tpl = Twig.twig({
+            id: id,
+            data: source,
+            allowInlineIncludes: true
+        });
+    }
 
     tpl = tpl.compile({
         module: 'webpack',
