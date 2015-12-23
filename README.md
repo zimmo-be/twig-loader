@@ -3,7 +3,7 @@ Webpack loader for compiling Twig.js templates. This loader will allow you to re
 
 ## Usage
 
-[Documentation: Using loaders](http://webpack.github.io/docs/using-loaders.html)
+[Documentation: Using loaders](http://webpack.github.io/docs/using-loaders.html?branch=master)
 
 ``` javascript
 var template = require("twig!dialog.html.twig");
