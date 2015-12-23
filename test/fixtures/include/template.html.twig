@@ -1,0 +1,21 @@
+{% include './a.html' %}
+
+{% if true %}
+  {% include './b.html' %}
+{% elseif false %}
+  {% include './c.html' %}
+{% else %}
+  {% include './d.html' %}
+{% endif %}
+
+{% for i in 0..10 %}
+  {% include './e.html' %}
+{% endfor %}
+
+{% block myblock %}
+  {% include './f.html' %}
+{% endblock %}
+
+{% spaceless %}
+  {% include './g.html' %}
+{% endspaceless %}
