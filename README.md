@@ -1,4 +1,4 @@
-# twig-loader
+# twig-loader [![Build Status](https://travis-ci.org/zimmo-be/twig-loader.svg)](https://travis-ci.org/zimmo-be/twig-loader)
 Webpack loader for compiling Twig.js templates. This loader will allow you to require Twig.js views to your code.
 
 ## Usage
