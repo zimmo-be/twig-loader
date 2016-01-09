@@ -17,13 +17,13 @@ describe("include", function() {
       result.should.have.type("string");
 
       // verify the generated module imports the `include`d templates
-      result.should.match(/require\(\"twig\!\.\/a\.html\.twig\"\);/);
-      result.should.match(/require\(\"twig\!\.\/b\.html\.twig\"\);/);
-      result.should.match(/require\(\"twig\!\.\/c\.html\.twig\"\);/);
-      result.should.match(/require\(\"twig\!\.\/d\.html\.twig\"\);/);
-      result.should.match(/require\(\"twig\!\.\/e\.html\.twig\"\);/);
-      result.should.match(/require\(\"twig\!\.\/f\.html\.twig\"\);/);
-      result.should.match(/require\(\"twig\!\.\/g\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/a\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/b\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/c\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/d\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/e\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/f\.html\.twig\"\);/);
+      result.should.match(/require\(\"\.\/g\.html\.twig\"\);/);
 
       done();
     });
