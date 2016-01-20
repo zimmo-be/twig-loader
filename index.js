@@ -7,8 +7,43 @@ Twig.extend(function(Twig) {
     var compiler = Twig.compiler;
 
     compiler.module['webpack'] = function(id, tokens, pathToTwig) {
-        id = path.basename(id, ".twig");
-        var includes = [];
+        var includes = [],
+            dirname = path.dirname(id);
+
+        var hasTwigExtension = function(filepath) {
+            return filepath.substring(filepath.length - 5) === ".twig";
+        };
+
+        // remove the file extension which should be '.twig'
+        if (hasTwigExtension(id)) {
+            id = id.substring(0, id.length - 5);
+        }
+
+        // filepath is relative if it begins with './'
+        var isRelative = function(filepath) {
+            return filepath.substring(0, 2) === "./";
+        };
+
+        var processInclude = function(token) {
+            var template = token.value;
+
+            // if the template reference is relative
+            // then we must expand it out to the full
+            // id that will be registered with twig
+            if (isRelative(token.value)) {
+                token.value = dirname + template.substring(1);
+            }
+
+            if (hasTwigExtension(template)) {
+                // if the template reference has the twig extension
+                // then remove it.
+                token.value = token.value.substring(0, token.value.length - 5);
+            } else {
+                template += ".twig";
+            }
+
+            includes.push(template);
+        };
 
         var processToken = function(token) {
             if (token.type == "logic" && token.token.type) {
@@ -22,9 +57,7 @@ Twig.extend(function(Twig) {
                         _.each(token.token.output, processToken);
                         break;
                     case 'Twig.logic.type.extends':
-                        _.each(token.token.stack, function(token) {
-                            includes.push("twig!" + token.value + ".twig");
-                        });
+                        _.each(token.token.stack, processInclude);
                         break;
                     case 'Twig.logic.type.import':
                         if (token.token.expression != '_self') {
@@ -34,15 +67,15 @@ Twig.extend(function(Twig) {
                         }
                         break;
                     case 'Twig.logic.type.include':
-                        _.each(token.token.stack, function(token) {
-                            includes.push("twig!" + token.value + ".twig");
-                        });
+                        _.each(token.token.stack, processInclude);
                         break;
                 }
             }
         };
 
-        _.each(JSON.parse(tokens), processToken);
+        parsedTokens = JSON.parse(tokens);
+        _.each(parsedTokens, processToken);
+        tokens = JSON.stringify(parsedTokens);
 
         var output = [
             'var twig = require("' + pathToTwig + '").twig,',
@@ -62,9 +95,19 @@ Twig.extend(function(Twig) {
 
 module.exports = function(source) {
     var id = this.resource,
+        query = loaderUtils.parseQuery(this.query),
         tpl;
 
     this.cacheable && this.cacheable();
+
+    if (query.templateRoot) {
+        // remove the templateRoot from the path to the template
+        id = id.replace(query.templateRoot, '');
+    }
+
+    if (id.substring(0, 1) === '/') {
+        id = id.substring(1);
+    }
 
     // check if template already exists
     tpl = Twig.twig({ ref: id });
