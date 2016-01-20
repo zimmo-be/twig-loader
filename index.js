@@ -28,7 +28,9 @@ Twig.extend(function(Twig) {
                         break;
                     case 'Twig.logic.type.import':
                         if (token.token.expression != '_self') {
-                            throw new Error("Twig-loader: Importing macro's is not yet supported");
+                            _.each(token.token.stack, function(token) {
+                                includes.push("twig!" + token.value + ".twig");
+                            });
                         }
                         break;
                     case 'Twig.logic.type.include':
