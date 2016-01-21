@@ -7,8 +7,11 @@ Twig.extend(function(Twig) {
     var compiler = Twig.compiler;
 
     compiler.module['webpack'] = function(id, tokens, pathToTwig) {
-        id = path.basename(id, ".twig");
         var includes = [];
+        var processDependency = function(token) {
+            includes.push(token.value);
+            token.value = path.resolve(path.dirname(id), token.value);
+        };
 
         var processToken = function(token) {
             if (token.type == "logic" && token.token.type) {
@@ -22,9 +25,7 @@ Twig.extend(function(Twig) {
                         _.each(token.token.output, processToken);
                         break;
                     case 'Twig.logic.type.extends':
-                        _.each(token.token.stack, function(token) {
-                            includes.push("twig!" + token.value + ".twig");
-                        });
+                        _.each(token.token.stack, processDependency);
                         break;
                     case 'Twig.logic.type.import':
                         if (token.token.expression != '_self') {
@@ -34,25 +35,25 @@ Twig.extend(function(Twig) {
                         }
                         break;
                     case 'Twig.logic.type.include':
-                        _.each(token.token.stack, function(token) {
-                            includes.push("twig!" + token.value + ".twig");
-                        });
+                        _.each(token.token.stack, processDependency);
                         break;
                 }
             }
         };
 
-        _.each(JSON.parse(tokens), processToken);
+        var parsedTokens = JSON.parse(tokens);
+
+        _.each(parsedTokens, processToken);
 
         var output = [
             'var twig = require("' + pathToTwig + '").twig,',
-            '    template = twig({id:"' + id + '", data:' + tokens + ', allowInlineIncludes: true});\n',
+            '    template = twig({id:' + JSON.stringify(id) + ', data:' + JSON.stringify(parsedTokens) + ', allowInlineIncludes: true});\n',
             'module.exports = function(context) { return template.render(context); }'
         ];
 
         if (includes.length > 0) {
             _.each(includes, function(file) {
-                output.unshift("require("+ JSON.stringify(file) +");\n");
+                output.unshift("require("+ JSON.stringify("twig!" + file) +");\n");
             });
         }
 
@@ -61,9 +62,8 @@ Twig.extend(function(Twig) {
 });
 
 module.exports = function(source) {
-    var id = this.resource,
+    var id = require.resolve(this.resource),
         tpl;
-
     this.cacheable && this.cacheable();
 
     // check if template already exists
