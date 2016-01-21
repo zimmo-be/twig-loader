@@ -14,3 +14,13 @@ var html = template({title: 'dialog title'});
 ```
 
 When you extend another view, it will also be added as a dependency. Include and Import are not yet supported (check back soon).
+
+## Changelog
+
+0.2.0 / 2016-01-21
+==================
+
+* Add support for import statements (useful for Macro's)
+* Correctly resolve dependencies from include/import/extend statements with relative path support: [\#3] and [\#5]
+* CHANGE: No longer add the `.twig` file extension. After upgrading twig-loader, you may need to update your files and add `.twig` manually
+
