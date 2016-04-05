@@ -30,7 +30,7 @@ module.exports = {
 
 ```twig
 {# File: dialog.html.twig #}
-<p>{{title}</p>
+<p>{{title}}</p>
 ```
 
 ```javascript
