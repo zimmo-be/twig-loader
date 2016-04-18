@@ -47,6 +47,12 @@ When you extend another view, it will also be added as a dependency. Include and
 
 ## Changelog
 
+0.2.1 / 2016-04-18
+==================
+
+* Improve `import` support (https://github.com/zimmo-be/twig-loader/pull/8)
+* Rethrow exceptions when they occur during rendering to improve testing
+
 0.2.0 / 2016-01-21
 ==================
 
