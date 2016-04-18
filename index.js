@@ -45,7 +45,7 @@ Twig.extend(function(Twig) {
 
         var output = [
             'var twig = require("' + pathToTwig + '").twig,',
-            '    template = twig({id:' + JSON.stringify(id) + ', data:' + JSON.stringify(parsedTokens) + ', allowInlineIncludes: true});\n',
+            '    template = twig({id:' + JSON.stringify(id) + ', data:' + JSON.stringify(parsedTokens) + ', allowInlineIncludes: true, rethrow: true});\n',
             'module.exports = function(context) { return template.render(context); }'
         ];
 
