@@ -29,9 +29,7 @@ Twig.extend(function(Twig) {
                         break;
                     case 'Twig.logic.type.import':
                         if (token.token.expression != '_self') {
-                            _.each(token.token.stack, function(token) {
-                                includes.push("twig!" + token.value + ".twig");
-                            });
+                            _.each(token.token.stack, processDependency);
                         }
                         break;
                     case 'Twig.logic.type.include':
