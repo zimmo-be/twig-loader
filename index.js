@@ -24,16 +24,15 @@ Twig.extend(function(Twig) {
                     case 'Twig.logic.type.spaceless':
                         _.each(token.token.output, processToken);
                         break;
+                    case 'Twig.logic.type.embed':
                     case 'Twig.logic.type.extends':
+                    case 'Twig.logic.type.include':
                         _.each(token.token.stack, processDependency);
                         break;
                     case 'Twig.logic.type.import':
                         if (token.token.expression != '_self') {
                             _.each(token.token.stack, processDependency);
                         }
-                        break;
-                    case 'Twig.logic.type.include':
-                        _.each(token.token.stack, processDependency);
                         break;
                 }
             }
