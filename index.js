@@ -24,9 +24,12 @@ Twig.extend(function(Twig) {
                     case 'Twig.logic.type.spaceless':
                         _.each(token.token.output, processToken);
                         break;
-                    case 'Twig.logic.type.embed':
                     case 'Twig.logic.type.extends':
                     case 'Twig.logic.type.include':
+                        _.each(token.token.stack, processDependency);
+                        break;
+                    case 'Twig.logic.type.embed':
+                        _.each(token.token.output, processToken);
                         _.each(token.token.stack, processDependency);
                         break;
                     case 'Twig.logic.type.import':
@@ -49,7 +52,7 @@ Twig.extend(function(Twig) {
         ];
 
         if (includes.length > 0) {
-            _.each(includes, function(file) {
+            _.each(_.uniq(includes), function(file) {
                 output.unshift("require("+ JSON.stringify("twig!" + file) +");\n");
             });
         }
