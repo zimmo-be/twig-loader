@@ -63,14 +63,30 @@ Twig.extend(function(Twig) {
 
 module.exports = function(source) {
     var id = require.resolve(this.resource),
-        tpl;
+        tpl = false;
     this.cacheable && this.cacheable();
 
-    // check if template already exists
-    tpl = Twig.twig({ ref: id });
+    var globalOptions = this.options.twig || {};
+    var loaderOptions = loaderUtils.parseQuery(this.query);
+    var userOptions = Object.assign({
+        debug: false,
+        trace: false,
+        cache: true
+    }, globalOptions, loaderOptions);
+
+    if (!userOptions.cache) {
+        Twig.cache(false);
+    }
+
+    // check if template already exists only when cache is enable
+    if (userOptions.cache) {
+        tpl = Twig.twig({ ref: id });
+    }
     if (!tpl) {
         tpl = Twig.twig({
             id: id,
+            debug: userOptions.debug,
+            trace: userOptions.trace,
             data: source,
             allowInlineIncludes: true
         });
