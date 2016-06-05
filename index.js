@@ -3,6 +3,8 @@ var _ = require("underscore");
 var path = require("path");
 var loaderUtils = require("loader-utils");
 
+Twig.cache(false);
+
 Twig.extend(function(Twig) {
     var compiler = Twig.compiler;
 
@@ -53,7 +55,7 @@ Twig.extend(function(Twig) {
 
         if (includes.length > 0) {
             _.each(_.uniq(includes), function(file) {
-                output.unshift("require("+ JSON.stringify("twig!" + file) +");\n");
+                output.unshift("require("+ JSON.stringify(file) +");\n");
             });
         }
 
@@ -65,16 +67,12 @@ module.exports = function(source) {
     var id = require.resolve(this.resource),
         tpl;
     this.cacheable && this.cacheable();
-
-    // check if template already exists
-    tpl = Twig.twig({ ref: id });
-    if (!tpl) {
-        tpl = Twig.twig({
-            id: id,
-            data: source,
-            allowInlineIncludes: true
-        });
-    }
+    
+    tpl = Twig.twig({
+        id: id,
+        data: source,
+        allowInlineIncludes: true
+    });
 
     tpl = tpl.compile({
         module: 'webpack',
