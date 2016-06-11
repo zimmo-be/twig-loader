@@ -17,7 +17,7 @@ describe("extend", function() {
       result.should.have.type("string");
 
       // verify the generated module imports the `include`d templates
-      result.should.match(/require\(\"twig\!a\.html\.twig\"\);/);
+      result.should.match(/require\(\"a\.html\.twig\"\);/);
 
       done();
     });
