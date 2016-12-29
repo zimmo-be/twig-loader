@@ -46,6 +46,10 @@ var html = template({title: 'dialog title'});
 When you extend another view, it will also be added as a dependency. All twig functions that refer to additional templates are supported: import, include, extends & embed.
 
 ## Changelog
+0.2.4 / 2016-12-29
+==================
+ * Downgrade Twig.js back to 0.8.9 because of https://github.com/twigjs/twig.js/issues/440
+
 0.2.3 / 2016-06-11
 ==================
  * Improve watch operation (rebuilding of modules)
