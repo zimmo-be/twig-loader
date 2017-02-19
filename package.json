@@ -20,7 +20,9 @@
     "twig": "~0.8.9"
   },
   "dependencies": {
+    "hasha": "^2.2.0",
     "loader-utils": "^0.2.11",
+    "map-cache": "^0.2.2",
     "twig": "~0.8.9",
     "underscore": "^1.8.3"
   },
