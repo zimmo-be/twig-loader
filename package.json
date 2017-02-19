@@ -1,6 +1,6 @@
 {
   "name": "twig-loader",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "Webpack loader for compiling twig.js templates",
   "main": "index.js",
   "scripts": {
@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/zimmo-be/twig-loader#readme",
   "peerDependencies": {
-    "twig": "^0.9.5"
+    "twig": "~0.8.9"
   },
   "dependencies": {
     "loader-utils": "^0.2.11",
-    "twig": "^0.9.5",
+    "twig": "~0.8.9",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
