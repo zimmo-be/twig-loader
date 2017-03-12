@@ -16,8 +16,6 @@ describe("include", function () {
 
             result.should.have.type("string");
 
-            console.log(result);
-
             // verify the generated module imports the `include`d templates
             result.should.match(/require\(\"\.\/a\.html\.twig\"\);/);
             result.should.match(/require\(\"\.\/b\.html\"\);/); // test webpack extension resolve
