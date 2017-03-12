@@ -26,6 +26,9 @@ module.exports = function runLoader(loader, directory, filename, arg, callback) 
       if(request[0] && /stringify/.test(request[0]))
         content = JSON.stringify(content);
       return callback(null, content);
+    },
+    options: {
+      context: ''
     }
   };
   var res = loader.call(loaderContext, arg);
