@@ -17,13 +17,13 @@
   },
   "homepage": "https://github.com/zimmo-be/twig-loader#readme",
   "peerDependencies": {
-    "twig": "~0.8.9"
+    "twig": "~1.10.5"
   },
   "dependencies": {
-    "hasha": "^2.2.0",
-    "loader-utils": "^0.2.11",
+    "hasha": "^3.0.0",
+    "loader-utils": "^1.1.0",
     "map-cache": "^0.2.2",
-    "twig": "~0.8.9",
+    "twig": "^1.10.5",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
