@@ -20,7 +20,7 @@ module.exports = {
                 test: /\.twig$/,
                 loader: "twig-loader",
                 options: {
-                    // Any options are passed through to twig.js
+                    // See options section below
                 },
             }
         ]
@@ -31,6 +31,11 @@ module.exports = {
     }
 };
 ```
+
+### Options
+
+- `twigOptions`: optional; a map of options to be passed through to Twig.
+  Example: `{autoescape: true}`
 
 ## Loading templates
 
