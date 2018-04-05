@@ -15,8 +15,14 @@ module.exports = {
     //...
 
     module: {
-        loaders: [
-            { test: /\.twig$/, loader: "twig-loader" }
+        rules: [
+            {
+                test: /\.twig$/,
+                loader: "twig-loader",
+                options: {
+                    // Any options are passed through to twig.js
+                },
+            }
         ]
     },
 
