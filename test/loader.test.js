@@ -16,7 +16,7 @@ describe("loader", function() {
 
       result.should.have.type("string");
 
-      result.should.match(/require\(\"twig\"\)\.twig/);
+      result.should.match(/require\(\"twig\"\)/);
 
       done();
     });
