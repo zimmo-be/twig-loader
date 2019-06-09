@@ -7,6 +7,34 @@ Webpack loader for compiling Twig.js templates. This loader will allow you to re
 
 ## Usage
 
+### Webpack 2 and later
+
+[Documentation: Using loaders](https://webpack.js.org/concepts/loaders/)
+
+``` javascript
+module.exports = {
+  //...
+
+  module: {
+    rules: [
+      {
+        test: /\.twig$/,
+        use: {
+          loader: 'twig-loader',
+          options: {
+              // See options section below
+          },
+        }
+      }
+    ]
+  },
+
+  node: {
+      fs: "empty" // avoids error messages
+  }
+};
+```
+
 ### Webpack 1
 
 [Documentation: Using loaders](http://webpack.github.io/docs/using-loaders.html?branch=master)
@@ -34,25 +62,7 @@ module.exports = {
 };
 ```
 
-### Webpack 2
 
-[Documentation: Using loaders](https://webpack.js.org/concepts/loaders/#components/sidebar/sidebar.jsx)
-
-``` javascript
-module.exports = {
-  //...
-
-  module: {
-    rules: [
-      { test: /\.twig$/, use: 'twig-loader' }
-    ]
-  },
-
-  node: {
-      fs: "empty" // avoids error messages
-  }
-};
-```
 
 ### Options
 
