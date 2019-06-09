@@ -17,8 +17,14 @@ module.exports = {
     //...
 
     module: {
-        loaders: [
-            { test: /\.twig$/, loader: "twig-loader" }
+        rules: [
+            {
+                test: /\.twig$/,
+                loader: "twig-loader",
+                options: {
+                    // See options section below
+                },
+            }
         ]
     },
 
@@ -47,6 +53,11 @@ module.exports = {
   }
 };
 ```
+
+### Options
+
+- `twigOptions`: optional; a map of options to be passed through to Twig.
+  Example: `{autoescape: true}`
 
 ## Loading templates
 
@@ -105,6 +116,22 @@ context.keys().forEach(key => {
 
 
 ## Changelog
+0.4.1 / 2018-06-12
+==================
+ * Upgrade mocha to fix security vulnerability warning
+
+0.4.0 / 2018-05-17
+==================
+ * Add ablity to pass options to twig (PR #39)
+
+0.3.1 / 2017-11-08
+==================
+ * Update to Twig.js 1.10, fixes #29
+
+0.3.0 / 2017-02-19
+==================
+ * replace full path with a hash and implement mapcache for id/path resolution, fixes #12
+
 0.2.4 / 2016-12-29
 ==================
  * Downgrade Twig.js back to 0.8.9 because of https://github.com/twigjs/twig.js/issues/440

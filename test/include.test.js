@@ -90,7 +90,7 @@ describe("include", function () {
 
                 // the ID for the template 'nested.html.twig', this should match the one in the parent template
                 // that references this template
-                var templateId = result.match(/twig\({id:"([^"]+)"/i)[1];
+                var templateId = result.match(/twig\({"id":"([^"]+)"/i)[1];
 
                 templateId.should.equal(nestedTemplateId);
 
