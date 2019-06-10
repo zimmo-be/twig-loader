@@ -7,6 +7,36 @@ Webpack loader for compiling Twig.js templates. This loader will allow you to re
 
 ## Usage
 
+### Webpack 2 and later
+
+[Documentation: Using loaders](https://webpack.js.org/concepts/loaders/)
+
+``` javascript
+module.exports = {
+  //...
+
+  module: {
+    rules: [
+      {
+        test: /\.twig$/,
+        use: {
+          loader: 'twig-loader',
+          options: {
+              // See options section below
+          },
+        }
+      }
+    ]
+  },
+
+  node: {
+      fs: "empty" // avoids error messages
+  }
+};
+```
+
+### Webpack 1
+
 [Documentation: Using loaders](http://webpack.github.io/docs/using-loaders.html?branch=master)
 
 ``` javascript
@@ -32,6 +62,8 @@ module.exports = {
 };
 ```
 
+
+
 ### Options
 
 - `twigOptions`: optional; a map of options to be passed through to Twig.
@@ -55,6 +87,43 @@ var html = template({title: 'dialog title'});
 ```
 
 When you extend another view, it will also be added as a dependency. All twig functions that refer to additional templates are supported: import, include, extends & embed.
+
+
+## Dynamic templates and registering at runtime
+
+twig-loader will only resolve static paths in your templates, according to your webpack configuration.
+When you want to use dynamic templates or aliases, they cannot be resolved by webpack, and will be
+left untouched in your template. It is up to you to make sure those templates are available in Twig
+at runtime by registering them yourself:
+
+``` javascript
+var twig = require('twig').twig
+twig({
+  id: 'your-custom-template-id,
+  data: '<p>your template here</p>',
+  allowInlineIncludes: true,
+  rethrow: true
+});
+```
+
+Or more advanced when using `webpack.context`:
+``` javascript
+var twig = require('twig').twig
+
+var context = require.context('./templates/', true, /\.twig$/)
+context.keys().forEach(key => {
+  var template = context(key);
+  twig({
+    id: key, // key will be relative from `./templates/`
+    data: template.tokens, // tokens are exported on the template function
+    allowInlineIncludes: true,
+    rethrow: true
+  });
+});
+
+```
+
+
 
 ## Changelog
 0.4.1 / 2018-06-12
